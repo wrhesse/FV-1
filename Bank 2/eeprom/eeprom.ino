@@ -14,53 +14,53 @@
 #define NUM_PROGRAMS 8 // 8 programs per bank
 #define NUM_BANKS 1   // one bank per eeprom. V1 of the pedal also stored the internal ROM bank on here.
 char *labels[] = {
-  "Room Reverb\0",
+  "Choir Saw\0",
   "\0",
-  "Dwell\0",
-  "Pre-Delay\0",
-  "Dampen\0",
+  "Delay Time\0",
+  "Feedback and Pitch Volume\0",
+  "Rate\0",
 
-  "Hall Reverb\0",
+  "Reverb (Infinite at Maximum)\0",
   "\0",
-  "Dwell\0",
-  "Pre-Delay\0",
-  "Dampen\0",
-
-  "Chamber Reverb\0",
-  "\0",
-  "Dwell\0",
-  "Low\0",
-  "High\0",
-
-  "Cavern Reverb\0",
-  "\0",
-  "Dwell\0",
-  "Low\0",
-  "High\0",
+  "Reverb\0",
+  "High Pass Filter\0",
+  "Low Pass Filter\0",
 
   "Shimmer Reverb\0",
   "\0",
-  "Dwell\0",
-  "Shimmer Pitch\0",
   "Shimmer Level\0",
+  "High Pass Filter\0",
+  "Reverb Time\0",
 
-  "Modulated Reverb\0",
+  "Greenwood Delay\0",
   "\0",
-  "Dwell\0",
-  "Mod Depth\0",
-  "Mod Rate\0",
+  "Speed\0",
+  "Time\0",
+  "Randomness\0",
 
-  "Pitch Verb\0",
+  "Oil Can Delay\0",
   "\0",
-  "Dwell\0",
-  "Octave Down\0",
-  "Octave Up\0",
+  "Time & Rate\0",
+  "Chorus Width\0",
+  "Feedback\0",
 
-  "Touch Reverb\0",
+  "Pitch Transposer\0",
   "\0",
-  "Dwell\0",
-  "Ducking\0",
-  "Sensitivity\0"
+  "Pitch\0",
+  "N/A\0",
+  "N/A\0",
+
+  "Triple Tap Cascaded Delay\0",
+  "\0",
+  "Time 1\0",
+  "Time 2\0",
+  "Time 3\0",
+
+  "Octave Up and Down\0",
+  "\0",
+  "Mix"\0",
+  "Octave Up"\0",
+  "Octave Down\0"
 };
 
 
