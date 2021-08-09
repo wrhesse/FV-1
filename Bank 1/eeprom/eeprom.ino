@@ -56,11 +56,11 @@ char *labels[] = {
   "Rate\0",
   "Depth\0",
 
-  "Tremolo w/ Multiple LFO Waveshapes\0",
+  "Through Zero Flanger\0",
   "\0",
-  "Wave Shape\0",
-  "Depth\0",
-  "Rate\0"
+  "Rate\0",
+  "Feedback\0",
+  "N/A\0"
 };
 
 
