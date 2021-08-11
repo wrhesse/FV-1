@@ -20,11 +20,11 @@ char *labels[] = {
   "Feedback and Pitch Volume\0",
   "Rate\0",
 
-  "Reverb (Infinite at Maximum)\0",
+  "Variable Pitch Reverb\0",
   "\0",
-  "Reverb\0",
-  "High Pass Filter\0",
-  "Low Pass Filter\0",
+  "Frequency Shift\0",
+  "Time\0",
+  "Damping\0",
 
   "Shimmer Reverb\0",
   "\0",
@@ -32,10 +32,10 @@ char *labels[] = {
   "High Pass Filter\0",
   "Reverb Time\0",
 
-  "Greenwood Delay\0",
+  "Glitch Delay\0",
   "\0",
   "Speed\0",
-  "Time\0",
+  "Max Delay\0",
   "Randomness\0",
 
   "Oil Can Delay\0",

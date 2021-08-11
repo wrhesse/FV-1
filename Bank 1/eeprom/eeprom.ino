@@ -44,11 +44,11 @@ char *labels[] = {
   "Depth\0",
   "Crossfade\0",
 
-  "Slow Gear\0",
+  "Tremolo Multiple Shapes\0",
   "\0",
-  "Attack Rate\0",
-  "N/A\0",
-  "N/A\0",
+  "Wave Shape\0",
+  "Depth\0",
+  "Rate\0",
 
   "Spring Reverb + Tremolo\0",
   "\0",
