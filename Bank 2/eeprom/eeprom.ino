@@ -58,8 +58,8 @@ char *labels[] = {
 
   "Octave Up and Down\0",
   "\0",
-  "Mix"\0",
-  "Octave Up"\0",
+  "Mix\0",
+  "Octave Up\0",
   "Octave Down\0"
 };
 
