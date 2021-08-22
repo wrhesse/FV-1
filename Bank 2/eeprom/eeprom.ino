@@ -20,16 +20,16 @@ char *labels[] = {
   "Feedback and Pitch Volume\0",
   "Rate\0",
 
-  "Variable Pitch Reverb\0",
+  "Rumble Reverb\0",
   "\0",
-  "Frequency Shift\0",
-  "Time\0",
-  "Damping\0",
+  "Rumble Level\0",
+  "Warmth\0",
+  "Reverb Time\0",
 
   "Shimmer Reverb\0",
   "\0",
   "Shimmer Level\0",
-  "High Pass Filter\0",
+  "Warmth\0",
   "Reverb Time\0",
 
   "Glitch Delay\0",

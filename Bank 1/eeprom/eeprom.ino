@@ -14,11 +14,11 @@
 #define NUM_PROGRAMS 8 // 8 programs per bank
 #define NUM_BANKS 1   // one bank per eeprom. V1 of the pedal also stored the internal ROM bank on here.
 char *labels[] = {
-  "Envelope Phaser\0",
+  "Envelope Filter\0",
   "\0",
-  "Rate\0",
-  "Depth\0",
-  "Regen\0",
+  "Amount\0",
+  "Resonance\0",
+  "Frequency\0",
 
   "Envelope Tremolo Depth Down\0",
   "\0",
@@ -44,11 +44,11 @@ char *labels[] = {
   "Depth\0",
   "Crossfade\0",
 
-  "Tremolo Multiple Shapes\0",
+  "Reverb/HP/LP\0",
   "\0",
-  "Wave Shape\0",
-  "Depth\0",
-  "Rate\0",
+  "Reverb\0",
+  "High Pass Filter\0",
+  "Low Pass Filter\0",
 
   "Spring Reverb + Tremolo\0",
   "\0",

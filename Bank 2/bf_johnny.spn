@@ -151,10 +151,10 @@ ldax   adcl   	;Read in ADC left
 wra   del,1   	; Write to delay line
 
 
-wrax   dacl,1   	;and to dacl
+;wrax   dacl,1   	;and to dacl
 
 
-wrax   dacr,0  	;and to dacr
+;wrax   dacr,0  	;and to dacr
 
 
 skp   zro, end   	;Jump to end
