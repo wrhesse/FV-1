@@ -35,7 +35,6 @@ CLR ;clear the accumulator, there's 1/4 left in it!
 ;
 ;Fourth program, envelope controlled depth, depth increases with signal
 ;
-CLR
 RDAX POT0,1.0000000000
 WRAX SIN0_RATE,0.0000000000
 RDAX ENV,1.0000000000
