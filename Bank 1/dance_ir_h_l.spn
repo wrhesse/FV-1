@@ -22,9 +22,8 @@ equ	kfh	reg11
 equ	kfl	reg12
 equ	temp	reg13
 equ	rmixl	reg14
-equ	rmixr	reg15
+equ rmixr   reg15
 equ	hpoutl	reg16
-equ	hpoutr	reg17
 equ	hbyp	reg18
 equ	lbyp	reg19
 equ env     reg20
@@ -174,17 +173,6 @@ mulx	kfh
 rdax	hpal,1
 wrax	hpal,0
 
-rdax	hpar,1
-mulx	kfh
-rdax	hpbr,1
-wrax	hpbr,-1
-rdax	hpar,kqh
-rdax	rmixr,1
-wrax	hpoutr,1	;HP output
-mulx	kfh
-rdax	hpar,1
-wrax	hpar,0
-
 ;bypass if pot1 is fully counterclockwise:
 
 rdax	hpoutl,-1
@@ -192,12 +180,6 @@ rdax	rmixl,1
 mulx	hbyp
 rdax	hpoutl,1
 wrax	hpoutl,0
-
-rdax	hpoutr,-1
-rdax	rmixr,1
-mulx	hbyp
-rdax	hpoutr,1
-wrax	hpoutr,0
 
 ;now do cascaded low pass:
 
@@ -211,28 +193,8 @@ mulx	kfl
 rdax	lpal,1
 wrax	lpal,0
 
-rdax	lpar,1
-mulx	kfl
-rdax	lpbr,1
-wrax	lpbr,-1
-rdax	lpar,kql
-rdax	hpoutr,1
-mulx	kfl
-rdax	lpar,1
-wrax	lpar,0
-
 rdax	lpbl,-1
 rdax	hpoutl,1
 mulx	lbyp
 rdax	lpbl,1
 wrax	dacl,0
-	
-rdax	lpbr,-1
-rdax	hpoutr,1
-mulx	lbyp
-rdax	lpbr,1
-wrax	dacr,0
-
-
-
-
