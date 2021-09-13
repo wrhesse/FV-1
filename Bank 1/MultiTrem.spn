@@ -1,13 +1,12 @@
 ; Envelope Tremolo with selectable versions (speed up/down or depth up/down)
+; William Hesse 2021
 
 ;POT0 rate
 ;POT1 depth 
 ;POT2 program selection 
 
-equ SINE REG0
-equ ENV REG1
-equ RATE REG2
-equ DEP REG3
+EQU SINE REG0
+EQU ENV REG1
 
 ;set up LFOs, only at start up 
 SKP RUN ,1
@@ -23,8 +22,7 @@ SOF -2.0000000000,0.0000000000
 RDFX ENV,0.0003825136
 WRAX ENV,0.0000000000
 
-; Simple example of using pot to jump to different routines in a program
-; In this example we will jump between a few different programs
+; Use POT2 to jump to different routines in a program
 ;
 RDAX POT2,1
 AND %01100000_00000000_00000000 ;mask off only 2 bits, leaving only 4 possibilities
@@ -35,7 +33,7 @@ sof 1,-0.25 ;subtract 1/4
 SKP ZRO,PRG3 ;if zero, skip over other code to PRG3
 CLR ;clear the accumulator, there's 1/4 left in it! 
 ;
-;Fourth program, envelope controlled rate, rate increases with signal
+;Fourth program, envelope controlled depth, depth increases with signal
 ;
 RDAX POT0,1.0000000000
 WRAX SIN0_RATE,0.0000000000
@@ -91,6 +89,8 @@ CHO RDAL,0
 SOF 0.5000000000,0.5000000000
 WRAX SINE,0.0000000000
 SKP ZRO, TREM 
+;
+; Modulate input signal by sine generated above
 ;
 TREM:
 CLR
