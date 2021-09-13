@@ -27,6 +27,7 @@ equ	hpoutl	reg16
 equ	hpoutr	reg17
 equ	hbyp	reg18
 equ	lbyp	reg19
+equ env     reg20
 
 mem	ap1	202
 mem	ap2	541
@@ -66,6 +67,19 @@ sof	1,-0.5		;subtract 1/2
 skp	gez,2		;skp if pot is in upper half of range
 sof	0,0.5		;load accumulator with +0.5
 wrax	krt,0		;overwrite if pot is in lower half of range
+
+;------ Envelope
+RDAX ADCL,1.0000000000             ; read in signal
+ABSA                               ; absolute value
+SOF -2.0000000000,0.0000000000     ; scale to get around 0-1
+SOF -2.0000000000,0.0000000000
+SOF -2.0000000000,0.0000000000
+SOF -2.0000000000,0.0000000000
+RDFX env,0.0003825136              ; Low pass filter
+SOF 1,-0.25                        ; If signal is below ~0.75
+SKP GEZ, 2                         ; If the input signal is high
+SOF 0,0.998                        ; Load accumulator with ~1
+WRAX krt,0                         ;  Overwrite accumulator       
 
 ;now prepare pot1 for HP sweeping.
 ;both frequency controls are exponential, and frequency increases
