@@ -67,7 +67,7 @@ WRAX HFP,0.0000000000
 SKP ZRO, TREM
 
 ;Second program, 144 Hz / 637 Hz (Similar to Showman, apparently)
-PRG1:
+PRG2:
 CLR
 ;
 ;------ LPF 1P
@@ -83,7 +83,7 @@ WRAX HFP,0.0000000000
 SKP ZRO, TREM
 
 ;Third program, 200 Hz / 1420 Hz
-PRG1:
+PRG3:
 CLR
 ;
 ;------ LPF 1P
