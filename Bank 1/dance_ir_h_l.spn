@@ -75,8 +75,8 @@ SOF -2.0000000000,0.0000000000
 SOF -2.0000000000,0.0000000000
 SOF -2.0000000000,0.0000000000
 RDFX env,0.0003825136              ; Low pass filter
-SOF 1,-0.25                        ; If signal is below ~0.75
-SKP GEZ, 2                         ; If the input signal is high
+SOF 1,-0.85                        ; If signal is below ~0.75
+SKP NEG, 2                         ; If the input signal is high
 SOF 0,0.998                        ; Load accumulator with ~1
 WRAX krt,0                         ;  Overwrite krt       
 
