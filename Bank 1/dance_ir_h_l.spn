@@ -22,11 +22,11 @@ equ	kfh	reg11
 equ	kfl	reg12
 equ	temp	reg13
 equ	rmixl	reg14
-equ rmixr   reg15
+equ	rmixr	reg15
 equ	hpoutl	reg16
+equ	hpoutr	reg17
 equ	hbyp	reg18
 equ	lbyp	reg19
-equ env     reg20
 
 mem	ap1	202
 mem	ap2	541
@@ -66,19 +66,6 @@ sof	1,-0.5		;subtract 1/2
 skp	gez,2		;skp if pot is in upper half of range
 sof	0,0.5		;load accumulator with +0.5
 wrax	krt,0		;overwrite if pot is in lower half of range
-
-;------ Envelope
-RDAX ADCL,1.0000000000             ; read in signal
-ABSA                               ; absolute value
-SOF -2.0000000000,0.0000000000     ; scale to get around 0-1
-SOF -2.0000000000,0.0000000000
-SOF -2.0000000000,0.0000000000
-SOF -2.0000000000,0.0000000000
-RDFX env,0.0003825136              ; Low pass filter
-SOF 1,-0.85                        ; If signal is below ~0.75
-SKP NEG, 2                         ; If the input signal is high
-SOF 0,0.998                        ; Load accumulator with ~1
-WRAX krt,0                         ;  Overwrite krt       
 
 ;now prepare pot1 for HP sweeping.
 ;both frequency controls are exponential, and frequency increases
@@ -173,6 +160,17 @@ mulx	kfh
 rdax	hpal,1
 wrax	hpal,0
 
+rdax	hpar,1
+mulx	kfh
+rdax	hpbr,1
+wrax	hpbr,-1
+rdax	hpar,kqh
+rdax	rmixr,1
+wrax	hpoutr,1	;HP output
+mulx	kfh
+rdax	hpar,1
+wrax	hpar,0
+
 ;bypass if pot1 is fully counterclockwise:
 
 rdax	hpoutl,-1
@@ -180,6 +178,12 @@ rdax	rmixl,1
 mulx	hbyp
 rdax	hpoutl,1
 wrax	hpoutl,0
+
+rdax	hpoutr,-1
+rdax	rmixr,1
+mulx	hbyp
+rdax	hpoutr,1
+wrax	hpoutr,0
 
 ;now do cascaded low pass:
 
@@ -193,8 +197,28 @@ mulx	kfl
 rdax	lpal,1
 wrax	lpal,0
 
+rdax	lpar,1
+mulx	kfl
+rdax	lpbr,1
+wrax	lpbr,-1
+rdax	lpar,kql
+rdax	hpoutr,1
+mulx	kfl
+rdax	lpar,1
+wrax	lpar,0
+
 rdax	lpbl,-1
 rdax	hpoutl,1
 mulx	lbyp
 rdax	lpbl,1
 wrax	dacl,0
+	
+rdax	lpbr,-1
+rdax	hpoutr,1
+mulx	lbyp
+rdax	lpbr,1
+wrax	dacr,0
+
+
+
+
