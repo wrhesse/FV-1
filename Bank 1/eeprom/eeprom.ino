@@ -30,7 +30,7 @@ char *labels[] = {
   "\0",
   "Rate\0",
   "Depth\0",
-  "N/A\0",
+  "Filter Cutoffs\0",
 
   "Slocum Phase Shifter\0",
   "\0",

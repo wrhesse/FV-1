@@ -32,11 +32,11 @@ char *labels[] = {
   "Warmth\0",
   "Reverb Time\0",
 
-  "Glitch Delay\0",
+  "Dual Glitch Delay\0",
   "\0",
-  "Speed\0",
-  "Max Delay\0",
-  "Randomness\0",
+  "Step Rate, Delay Tap 1\0",
+  "Step Rate, Delay Tap 2\0",
+  "Feedback\0",
 
   "Oil Can Delay\0",
   "\0",
