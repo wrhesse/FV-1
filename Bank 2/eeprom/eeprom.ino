@@ -32,11 +32,11 @@ char *labels[] = {
   "Warmth\0",
   "Reverb Time\0",
 
-  "Dual Glitch Delay\0",
+  "Glitch Delay\0",
   "\0",
-  "Step Rate, Delay Tap 1\0",
-  "Step Rate, Delay Tap 2\0",
-  "Feedback\0",
+  "Speed\0",
+  "Time\0",
+  "Random\0",
 
   "Oil Can Delay\0",
   "\0",
@@ -56,11 +56,11 @@ char *labels[] = {
   "Time 2\0",
   "Time 3\0",
 
-  "Octave Up and Down\0",
+  "Church\0",
   "\0",
-  "Mix\0",
   "Octave Up\0",
-  "Octave Down\0"
+  "Octave Down\0",
+  "Choir\0"
 };
 
 
