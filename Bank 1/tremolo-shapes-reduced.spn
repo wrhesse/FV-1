@@ -2,9 +2,9 @@
 ; by Slacker
 ; http://www.spinsemi.com/forum/viewtopic.php?f=3&t=516
 
-;POT0 wave shape 
+;POT0 rate 
 ;POT1 depth 
-;POT2 speed 
+;POT2 wave shape
 ;set up LFOs, only at start up 
 
 equ sine reg0 
@@ -25,9 +25,9 @@ wldr   rmp0,0,4096
 
 START: 
 
-;get LFO speed from POT2 
+;get LFO speed from pot0 
 
-ldax pot2 
+ldax pot0 
 sof 0.985,0.015 
 wrax   rmp0_rate,1 
 sof 0.7849,0 
@@ -79,7 +79,7 @@ sof -2,0
 sof 0.5,0.5 
 wrax square,0 ;square sort of might need more sofs to straighten the sides up more 
 
-ldax pot0 
+ldax pot2 
 and %01110000_00000000_00000000 
 skp neg,ONE 
 sof 1,-0.167     

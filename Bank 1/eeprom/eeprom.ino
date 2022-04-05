@@ -32,17 +32,17 @@ char *labels[] = {
   "Depth\0",
   "Filter Cutoffs\0",
 
-  "Slocum Phase Shifter\0",
+  "Tremolo\0",
   "\0",
   "Rate\0",
   "Depth\0",
-  "Stages (4,6,8,10)\0",
+  "Shape\0",
 
-  "Lush Reverb\0",
+  "Tap Delay\0",
   "\0",
-  "Time\0",
-  "Low Pass Filter\0",
-  "High Pass Filter\0",
+  "Tap\0",
+  "Repeats\0",
+  "Mix\0",
 
   "Reverb/HP/LP\0",
   "\0",

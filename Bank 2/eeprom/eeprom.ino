@@ -44,10 +44,10 @@ char *labels[] = {
   "Chorus Width\0",
   "Feedback\0",
 
-  "Pitch Transposer\0",
+  "Whammy\0",
   "\0",
-  "Pitch\0",
-  "N/A\0",
+  "Expression\0",
+  "Interval\0",
   "N/A\0",
 
   "Triple Tap Cascaded Delay\0",
