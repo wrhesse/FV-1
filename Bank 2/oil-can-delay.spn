@@ -1,8 +1,8 @@
 ; Vinnie-05-oil-can.spcd
 ; Patch saved from SpinCAD Designer version 998
-; Pot 0: delay time/wobble frequency
+; Pot 0: feedback
 ; Pot 1: wobble depth
-; Pot 2: feedback
+; Pot 2: delay time/wobble frequency
 ; For Fuchs Audio - oil can demo
 ; Gary Worsham, Holy City Audio- for evaluation only.  not for production release
 ; ----------------------------
@@ -10,7 +10,7 @@
 ;------ Pot 2
 ;------ Pot 0
 ;------ Smoother
-RDAX POT0,1.0000000000
+RDAX POT2,1.0000000000
 RDFX REG0,0.0001500000
 WRAX REG0,0.0000000000
 ;------ Feedback Output
@@ -23,7 +23,7 @@ WRAX REG2,0.0000000000
 RDAX ADCL,1.0000000000
 WRAX REG3,0.0000000000
 RDAX REG1,1.0000000000
-MULX POT2
+MULX POT0
 RDAX REG3,1.0000000000
 WRAX REG3,0.0000000000
 ;------ Chorus
