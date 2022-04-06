@@ -40,9 +40,9 @@ char *labels[] = {
 
   "Oil Can Delay\0",
   "\0",
-  "Time & Rate\0",
-  "Chorus Width\0",
   "Feedback\0",
+  "Chorus Width\0",
+  "Time & Rate\0",
 
   "Whammy\0",
   "\0",
