@@ -1,10 +1,10 @@
 ;tap tempo delay
 ;mono input (ADCL) mono output (DACL)
 ;a 0 - 0.99 square wave at the tap tempo rate is send to DACR. This can be used to flash a LED using a suitable driver.
-;Pot 2 is used as a tap tempo switch input. This should be a momentary switch, transition can be high to low or low to high.
+;Pot 0 is used as a tap tempo switch input. This should be a momentary switch, transition can be high to low or low to high.
 ;see guitar amp application note for examples of switch hookup.
-;pot 0 = feedback
 ;pot 1 = delay level
+;pot 2 = feedback
 
 ;set up registers and equates
 
@@ -36,7 +36,7 @@ START:
 
 ;Switch Debouncing and pot filtering work around
 
-ldax   pot2   ;read pot2
+ldax   pot0   ;read pot0
 sof 1,-0.5   ;level shift to -0.5 to 0.5
 skp neg,DOWN   ;if negative jump to DOWN
 ldax db      ;else high, read db
@@ -124,7 +124,7 @@ wrax addr_ptr,0      ;write to delay address pointer
 rmpa 1         ;read from delay address set by pointer
 wrax delayout,1      ;write to delayout register
 
-mulx pot0      ;mulx with pot0, feedback level control
+mulx pot2      ;mulx with pot2, feedback level control
 wrax clip,-0.33333   ;soft clip, using cube distortion snippet
 mulx clip
 mulx clip
