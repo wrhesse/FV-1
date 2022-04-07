@@ -41,8 +41,8 @@ char *labels[] = {
   "Tap Delay\0",
   "\0",
   "Tap\0",
-  "Repeats\0",
-  "Mix\0",
+  "Delay Level\0",
+  "Feedback\0",
 
   "Reverb/HP/LP\0",
   "\0",
