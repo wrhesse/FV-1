@@ -1,0 +1,171 @@
+;tap tempo delay
+;mono input (ADCL) mono output (DACL)
+;a 0 - 0.99 square wave at the tap tempo rate is send to DACR. This can be used to flash a LED using a suitable driver.
+;Pot 0 is used as a tap tempo switch input. This should be a momentary switch, transition can be high to low or low to high.
+;see guitar amp application note for examples of switch hookup.
+;pot 1 = tap division
+;pot 2 = feedback
+
+;set up registers and equates
+
+equ  db reg0        ;debounce
+equ  mom reg1       ;momentary output of switch +1 high, -1 Low
+equ  latch reg2     ;latched output of switch +1 high, -1 low
+equ ramp reg3       ;current value of rmpo, scaled to 0 to 1
+equ taptempo reg4   ;taptempo value, 0 to 1
+equ fback reg5      ;feedback
+equ delayout reg6   ;delay output
+equ clip reg7       ;clipping
+equ led reg8        ;taptempo LED
+equ eighth 1/2      ;eighth note 
+equ doteighth 3/4   ;dotted eighth
+equ tripeighth 1/3  ;eighth note tripplet 
+equ quarter 1       ;quarter note
+equ div reg9        ;division register
+
+equ count 0.01      ;debounce counter
+equ delaytime 330      ;initial delay time in milli seconds
+
+mem delay 32767
+
+skp run,START
+wldr rmp0,0.064,4096   ;set up rmp0
+wldr rmp1,0.064,4096   ;set up rmp1
+sof 0,0.99     
+wrax latch,1      ;set latch = 1 high
+wrax led,0      ;set led = 1 high
+sof 0,delaytime/1000   ;set initial delay time
+wrax ramp,0
+
+START:
+
+; get tap division
+rdax POT1,1	
+and	%01100000_00000000_00000000 ;mask off only 2 bits, leaving only 4 possibilities 
+skp	zro,diveighth	            ;if zero, skip over 
+sof	1,-0.25	                    ;subtract 1/4 
+skp	zro,divdoteighth	        ;if zero, skip over 
+sof	1,-0.25	                    ;subtract 1/4 
+skp	zro,divtripeighth	        ;if zero, skip over 
+clr	                            ;clear the accumulator, there's 1/4 left in it! 
+skp	zro,divquarter	            ;skip over 
+
+diveighth:
+ldax eighth
+wrax div,0
+
+divdoteighth:
+ldax doteighth
+wrax div,0
+
+divtripeighth:
+ldax tripeighth
+wrax div,0
+
+divquarter:
+ldax quarter
+wrax div,0
+
+;Switch Debouncing and pot filtering work around
+
+ldax   pot0   ;read pot0
+sof 1,-0.5   ;level shift to -0.5 to 0.5
+skp neg,DOWN   ;if negative jump to DOWN
+ldax db      ;else high, read db
+sof 1,count   ;add count
+wrax db,0   ;write new value to db
+skp zro,ENDDB   ;jump to ENDDB
+DOWN:
+ldax db      ;read db
+sof 1,-count   ;deduct count
+wrax db,0   ;write new value to db
+
+ENDDB:
+
+;latching switch, falling edge triggered flipflop
+;Output of debounce routine of < -0.9 is low, > 0.9 is high, values in between
+;are ignored and the switch does nothing, Schmitt trigger action.
+
+
+ldax db         ;read db
+absa         ;get absolute value
+sof 1,-0.9      ;deduct 0.9 so only values < -0.9 or > 0.9 give a positive result
+skp neg,ENDSWITCH   ;if negative then jump to ENDSWITCH
+ldax db         ;read db
+sof 1,-0.9      ;deduct 0.9
+skp neg,LO      ;if negative jump to LO, output of debounce is low
+sof 0,0.999      ;else output of debounce is high
+wrax mom,0      ;set mom to 1 (high)
+skp zro,ENDSWITCH   ;jump to ENDSWITCH
+LO:
+ldax mom      ;read mom
+skp neg,ENDSWITCH   ;if it's negative then debounce was already low last time so do nothing, jump to ENDSWITCH
+sof 0,-0.999      ;else mom was high last time so switch has only just been pressed (falling edge)
+wrax mom,0      ;set mom to -1 (low)
+ldax latch      ;read latch
+sof -1,0         ;invert, high becomes low, low becomes high
+wrax latch,0      ;write to value to latch
+
+ENDSWITCH:
+
+;tap tempo, uses rmp0 as a 1 Hz rising ramp, runs whilst latch is low and is sampled and held when latch is high
+
+ldax latch      ;read latch
+skp neg,LOW      ;if negative jump to LOW
+jam rmp0      ;else latch is high, jam rmp0 (reset to 0)
+ldax ramp      ;read ramp, will contain last value of rmp0 before latch went high   
+wrax taptempo,0      ;write to taptempo
+skp zro,ENDTT      ;jump to ENDTT
+LOW:
+sof 0,0.064     
+wrax rmp0_rate,0      ;set rmp0 rate to 1Hz
+cho rdal,rmp0      ;read value of rmp0
+sof -2,0.999
+sof 1,0.001      ;level shift to 0 to 1 rising ramp
+wrax ramp,1      ;write to ramp
+sof 1,-0.999      ;deduct 0.999 from ramp     
+skp neg,ENDTT      ;if answer is positive then second tap hasn't happened with 0.999 ms of first         
+ldax taptempo      ;so keep last value of taptempo
+wrax ramp,0     
+sof 0,0.999      ;and reset latch high
+wrax latch,0
+ENDTT:
+
+;Taptempo rate indicator, creates a square wave at the tap tempo rate
+sof 0,0.064     
+wrax rmp1_rate,0      ;set rmp1 rate to 1Hz
+cho rdal,rmp1      ;read value of rmp1
+sof -2,0.999      ;level shift to 0 - 1 rising ramp
+sof 1,0.001
+rdax taptempo,-0.5   ;deduct half of the taptempo value
+skp neg,ENDLED      ;if negative skip to ENDLED
+jam rmp1      ;else reset ramp1
+ldax led         ;and invert value of led register, creates square wave at taptempo rate
+sof -1,0
+wrax led,0
+ENDLED:
+
+;delay
+
+clr
+rdax fback,0.95     ;read feedback register, scaled to 0.95%
+rdax adcl,1         ;mix with input from ADCL
+wra delay,0         ;write to head of delay
+ldax taptempo       ;read taptempo register
+mulx div            ;multiply taptempo by divsion 
+wrax addr_ptr,0     ;write to delay address pointer
+rmpa 1              ;read from delay address set by pointer
+wrax delayout,1     ;write to delayout register
+
+mulx pot2           ;mulx with pot2, feedback level control
+wrax clip,-0.33333  ;soft clip, using cube distortion snippet
+mulx clip
+mulx clip
+rdax clip,1
+wrax fback,0        ;write to feedback register
+
+rdax delayout,1     ;read delayout register
+wrax dacl,0         ;write to DACL
+
+ldax led            ;read led register
+wrax dacr,0         ;write to DACR, flashes LED attached to DACR
