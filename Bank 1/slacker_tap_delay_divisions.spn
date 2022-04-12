@@ -20,7 +20,7 @@ equ led reg8        ;taptempo LED
 equ eighth 1/2      ;eighth note 
 equ doteighth 3/4   ;dotted eighth
 equ tripeighth 1/3  ;eighth note tripplet 
-equ quarter 1       ;quarter note
+equ quarter -1       ;quarter note
 equ div reg9        ;division register
 
 equ count 0.01      ;debounce counter
@@ -51,19 +51,19 @@ clr	                            ;clear the accumulator, there's 1/4 left in it!
 skp	zro,divquarter	            ;skip over 
 
 diveighth:
-ldax eighth
+sof 0,eighth
 wrax div,0
 
 divdoteighth:
-ldax doteighth
+sof 0,doteighth
 wrax div,0
 
 divtripeighth:
-ldax tripeighth
+sof 0,tripeighth
 wrax div,0
 
 divquarter:
-ldax quarter
+sof -1,quarter
 wrax div,0
 
 ;Switch Debouncing and pot filtering work around
