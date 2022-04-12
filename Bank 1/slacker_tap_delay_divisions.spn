@@ -17,6 +17,10 @@ equ fback reg5      ;feedback
 equ delayout reg6   ;delay output
 equ clip reg7       ;clipping
 equ led reg8        ;taptempo LED
+equ eighth 1/2      ;eighth note 
+equ doteighth 3/4   ;dotted eighth
+equ tripeighth 1/3  ;eighth note tripplet 
+equ quarter 1       ;quarter note
 
 equ count 0.01      ;debounce counter
 equ delaytime 330      ;initial delay time in milli seconds
@@ -119,7 +123,39 @@ clr
 rdax fback,0.95     ;read feedback register, scaled to 0.95%
 rdax adcl,1         ;mix with input from ADCL
 wra delay,0         ;write to head of delay
+
+; get tap division
+rdax POT1,1	
+and	%01100000_00000000_00000000 ;mask off only 2 bits, leaving only 4 possibilities 
+skp	zro,diveighth	            ;if zero, skip over 
+sof	1,-0.25	                    ;subtract 1/4 
+skp	zro,divdoteighth	        ;if zero, skip over 
+sof	1,-0.25	                    ;subtract 1/4 
+skp	zro,divtripeighth	        ;if zero, skip over 
+clr	                            ;clear the accumulator, there's 1/4 left in it! 
+skp	zro,divquarter	            ;skip over 
+
+diveighth:
 ldax taptempo       ;read taptempo register
+sof eighth,0
+skip gez, ENDDELAY
+
+divdoteighth:
+ldax taptempo       ;read taptempo register
+sof doteighth,0
+skip gez, ENDDELAY
+
+divtripeighth:
+ldax taptempo       ;read taptempo register
+sof tripeighth,0
+skip gez, ENDDELAY
+
+divquarter:
+ldax taptempo       ;read taptempo register
+sof quarter,0
+
+ENDDELAY:
+
 wrax addr_ptr,0     ;write to delay address pointer
 rmpa 1              ;read from delay address set by pointer
 wrax delayout,1     ;write to delayout register
